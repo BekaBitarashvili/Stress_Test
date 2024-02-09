@@ -3,7 +3,8 @@ from locust import HttpUser, between, task
 
 
 class WebsiteUser(HttpUser):
-    wait_time = between(1, 2)
+    wait_time = between(1, 5)
+    host = "https://www.google.com"
 
     @task
     def index_page(self):
@@ -11,4 +12,4 @@ class WebsiteUser(HttpUser):
 
     @task
     def view_item(self):
-        self.client.get(url="/customers/create")
+        self.client.get(url="/search/howsearchworks/?fg=1/")
