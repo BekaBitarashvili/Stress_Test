@@ -23,7 +23,7 @@ class WebsiteUser(HttpUser):
     @task
     def login_and_access_dashboard(self):
         # სიმულაცია
-        login_response = self.client.post("/auth/login", json={"username": "testuser", "password": "password"})
+        login_response = self.client.post("/auth/login", json={"username": "todatoda", "password": "vardisferiVardi1"})
         if login_response.status_code == 200:
             # სესიის ტოკენი
             session_token = login_response.cookies.get("session_token")
