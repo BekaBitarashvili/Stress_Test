@@ -6,8 +6,8 @@ from _winapi import NULL
 from locust import HttpUser, between, task, TaskSet, constant
 
 
-class FirstApi(HttpUser):
-    wait_time = constant(10)
+class User1(HttpUser):
+    wait_time = between(1, 1)
     host = "http://10.117.27.38:8000"
     session_key = "F014373B-C969-45C4-9B2D-BB1336C845B6"
 
@@ -21,7 +21,6 @@ class FirstApi(HttpUser):
         headers = {
             "Content-Type": "application/json"
         }
-        time.sleep(10)
         response = self.client.post("/api/login", json=payload, headers=headers)
         print(f"{self.login_user.__name__} - {response.status_code}")
 
@@ -35,7 +34,6 @@ class FirstApi(HttpUser):
         headers = {
             "Content-Type": "application/json"
         }
-        time.sleep(10)
         response = self.client.post("/api/reset_password", json=payload, headers=headers)
         print(f"{self.reset_password.__name__} - {response.status_code}")
 
@@ -49,7 +47,6 @@ class FirstApi(HttpUser):
             "Content-Type": "application/json",
             "session-key": self.session_key
         }
-        time.sleep(10)
         response = self.client.post("/api/update_password", json=payload, headers=headers)
         print(f"{self.update_password.__name__} - {response.status_code} - {self.session_key}")
 
@@ -62,7 +59,6 @@ class FirstApi(HttpUser):
         headers = {
             "Content-Type": "application/json"
         }
-        time.sleep(10)
         response = self.client.post("/api/check_customer", json=payload, headers=headers)
         print(f"{self.check_customer.__name__} - {response.status_code}")
 
@@ -82,6 +78,5 @@ class FirstApi(HttpUser):
         headers = {
             "Content-Type": "application/json"
         }
-        time.sleep(10)
         response = self.client.post(url="/api/create_account", json=payload, headers=headers)
         print(f"{self.create_account.__name__} - {response.status_code}")
