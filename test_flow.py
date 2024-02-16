@@ -54,7 +54,7 @@ class User1(HttpUser):
     def check_customer(self):
         payload = {
             "clientStatus": 1,
-            "customer": NULL,
+            "customer": None,
         }
         headers = {
             "Content-Type": "application/json"
