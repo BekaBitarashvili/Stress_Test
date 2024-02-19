@@ -7,6 +7,7 @@ from locust import HttpUser, between, task, TaskSet
 class BeforeAuthorization(HttpUser):
     wait_time = between(1, 1)
     host = "http://10.117.27.38:8090"
+    session_key = "FB35E783-C2A4-47C0-BCD7-3B815B7ED8AD"
 
     @task
     def index_page(self):
@@ -40,31 +41,36 @@ class BeforeAuthorization(HttpUser):
 
 
 class AfterAuthorization(HttpUser):
-    wait_time = between(1, 3)
+    wait_time = between(1, 1)
     host = "http://10.117.27.38:8090"
+    session_key = "FB35E783-C2A4-47C0-BCD7-3B815B7ED8AD"
 
     @task
-    def login_and_access_dashboard(self):
-        login_response = self.client.post("/auth/login", json={"username":"todatoda", "password": "vardisferiVardi1"})
-        if login_response.status_code == 200:
-            session_token = login_response.cookies.get("session_token")
-        # სესიის ტოკენის გამოყენება სხვა რექვესტებისთვის
-        self.client.get("/dashboard/", headers={"Authorization": f"Bearer {session_token}"})
+    def dashboard(self):
+        response = self.client.get(url="/dashboard")
+        print(f"{self.dashboard.__name__} - {response.status_code}")
 
     @task
-    def create_new_data(self):
-        payload = {"name": self.generate_random_name(), "email": self.generate_random_email()}
-        self.client.post("/data/create", json=payload)
+    def loans(self):
+        response = self.client.get(url="/loans")
+        print(f"{self.loans.__name__} - {response.status_code}")
 
     @task
-    def generate_random_name(self):
-        first_names = ["Achiko", "Dato", "Beka", "Zvio", "Luka", "Tornike"]
-        last_names = ["Beridze", "Toda", "Bitara", "Pirtskhala", "Kakhno", "Lomidze"]
-        return random.choice(first_names) + " " + random.choice(last_names)
+    def statementstoconfirm(self):
+        response = self.client.get(url="/statementsToConfirm")
+        print(f"{self.statementsToConfirm.__name__} - {response.status_code}")
 
     @task
-    def generate_random_email(self):
-        domains = ["gmail.com", "yahoo.com", "hotmail.com", "yandex.com", "test.com"]
-        username = ''.join(random.choices(string.ascii_letters + string.digits, k=random.randint(5, 10)))
-        domain = random.choice(domains)
-        return username + "@" + domain
+    def currency(self):
+        response = self.client.get(url="/currency")
+        print(f"{self.currencyExchange.__name__} - {response.status_code}")
+
+    @task
+    def currency2(self):
+        response = self.client.get(url="/en/currency")
+        print(f"{self.currencyExchange.__name__} - {response.status_code}")
+
+    @task
+    def profile(self):
+        response = self.client.get(url="/profile")
+        print(f"{self.profile.__name__} - {response.status_code}")

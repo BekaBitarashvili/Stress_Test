@@ -6,23 +6,10 @@ from _winapi import NULL
 from locust import HttpUser, between, task, TaskSet, constant
 
 
-class User1(HttpUser):
+class Auth(HttpUser):
     wait_time = between(1, 1)
     host = "http://10.117.27.38:8000"
-    session_key = "F014373B-C969-45C4-9B2D-BB1336C845B6"
-
-    @task
-    def login_user(self):
-        payload = {
-            "account_id": "156507",
-            "session_key": "F24141E3-D32A-40CB-BD21-779B24C5069E",
-            "phone": "599****62"
-        }
-        headers = {
-            "Content-Type": "application/json"
-        }
-        response = self.client.post("/api/login", json=payload, headers=headers)
-        print(f"{self.login_user.__name__} - {response.status_code}")
+    session_key = "FB35E783-C2A4-47C0-BCD7-3B815B7ED8AD"
 
     @task
     def reset_password(self):
@@ -32,7 +19,8 @@ class User1(HttpUser):
             "phone": "599****03"
         }
         headers = {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "session-key": self.session_key
         }
         response = self.client.post("/api/reset_password", json=payload, headers=headers)
         print(f"{self.reset_password.__name__} - {response.status_code}")
@@ -51,6 +39,18 @@ class User1(HttpUser):
         print(f"{self.update_password.__name__} - {response.status_code} - {self.session_key}")
 
     @task
+    def restore_password_otp(self):
+        payload = {
+            "otp": "000000"
+        }
+        headers = {
+            "Content-Type": "application/json",
+            "session-key": self.session_key
+        }
+        response = self.client.post("/api/restore_password_otp", json=payload, headers=headers)
+        print(f"{self.restore_password_otp.__name__} - {response.status_code}")
+
+    @task
     def check_customer(self):
         payload = {
             "clientStatus": 1,
@@ -65,18 +65,55 @@ class User1(HttpUser):
     @task
     def create_account(self):
         payload = {
-            "message": "The lang field is required. (and 1 more error)",
-            "errors": {
-                "lang": [
-                    "The lang field is required."
-                ],
-                "client_status": [
-                    "The client status field is required."
-                ]
-            }
+            "personal_id": "35001105092",
+            "phone": "598962796"
         }
         headers = {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "session-key": self.session_key
         }
         response = self.client.post(url="/api/create_account", json=payload, headers=headers)
         print(f"{self.create_account.__name__} - {response.status_code}")
+
+    @task
+    def check_create_account(self):
+        payload = {
+            "opt": "000000"
+        }
+        headers = {
+            "Content-Type": "application/json",
+            "session-key": self.session_key
+        }
+        response = self.client.post("/api/check_create_account", json=payload, headers=headers)
+        print(f"{self.check_create_account.__name__} - {response.status_code}")
+
+    @task
+    def check_username(self):
+        payload = {
+            "username": "AkidoTest"
+        }
+        headers = {
+            "Content-Type": "application/json",
+            "session-key": self.session_key
+        }
+        response = self.client.post("/api/check_username", json=payload, headers=headers)
+        print(f"{self.check_username.__name__} - {response.status_code}")
+
+
+class SDA(HttpUser):
+    wait_time = between(1, 1)
+    host = "http://10.117.27.38:8000"
+    session_key = "FB35E783-C2A4-47C0-BCD7-3B815B7ED8AD"
+
+    @task
+    def get_personal_info(self):
+        payload = {
+            "PersonalID": "00000001751",
+            "DocumentNumber": "00II00528"
+        }
+        headers = {
+            "Content-Type": "application/json",
+            "session-key": self.session_key
+        }
+        response = self.client.post("/api/SDA/get_personal_info", headers=headers, json=payload)
+        print(f"{self.get_personal_info.__name__} - {response.status_code}")
