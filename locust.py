@@ -58,17 +58,17 @@ class AfterAuthorization(HttpUser):
     @task
     def statementstoconfirm(self):
         response = self.client.get(url="/statementsToConfirm")
-        print(f"{self.statementsToConfirm.__name__} - {response.status_code}")
+        print(f"{self.statementstoconfirm.__name__} - {response.status_code}")
 
     @task
     def currency(self):
         response = self.client.get(url="/currency")
-        print(f"{self.currencyExchange.__name__} - {response.status_code}")
+        print(f"{self.currency.__name__} - {response.status_code}")
 
     @task
     def currency2(self):
         response = self.client.get(url="/en/currency")
-        print(f"{self.currencyExchange.__name__} - {response.status_code}")
+        print(f"{self.currency.__name__} - {response.status_code}")
 
     @task
     def profile(self):
