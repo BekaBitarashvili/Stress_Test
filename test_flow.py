@@ -101,7 +101,7 @@ class Auth(HttpUser):
 
 
 class SDA(HttpUser):
-    wait_time = between(1, 1)
+    wait_time = between(10, 20)
     host = "http://10.117.27.38:8000"
     session_key = "FB35E783-C2A4-47C0-BCD7-3B815B7ED8AD"
 
