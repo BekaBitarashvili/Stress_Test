@@ -9,20 +9,23 @@ from locust import HttpUser, between, task, TaskSet, constant
 class Auth(HttpUser):
     wait_time = between(1, 1)
     host = "http://10.117.27.38:8000"
-    session_key = "FB35E783-C2A4-47C0-BCD7-3B815B7ED8AD"
+    session_key = "CA7E94EF-8860-4628-904C-1F0FA0324558"
 
-    @task
     def reset_password(self):
-        payload = {
-            "account_id": "90492",
-            "session_key": "2A8BDCCD-F7E9-42A9-BA52-FDCB14530214",
-            "phone": "599****03"
+        expected_response = {
+            "personal_id": "60001095996",
+            "phone": "599458903"
         }
         headers = {
             "Content-Type": "application/json",
             "session-key": self.session_key
         }
-        response = self.client.post("/api/reset_password", json=payload, headers=headers)
+        with self.client.post("/api/reset_password", catch_response=True, json=expected_response,
+                              headers=headers) as response:
+            if response.status_code == expected_response:
+                response.success()
+            else:
+                response.failure("Failed to reset password")
         print(f"{self.reset_password.__name__} - {response.status_code}")
 
     @task
@@ -53,8 +56,8 @@ class Auth(HttpUser):
     @task
     def check_customer(self):
         payload = {
-            "clientStatus": 1,
-            "customer": None,
+            "personal_id": "31001025372",
+            "phone": "558349904",
         }
         headers = {
             "Content-Type": "application/json"
