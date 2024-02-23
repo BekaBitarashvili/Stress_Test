@@ -1,0 +1,9 @@
+[2024-02-22 13:01:00,575] BEKAB-TEST-HD/INFO/locust.main: Starting web interface at http://localhost:8089 (accepting connections from all network interfaces)
+[2024-02-22 13:01:00,588] BEKAB-TEST-HD/INFO/locust.main: Starting Locust 2.22.0
+[2024-02-22 13:02:01,980] BEKAB-TEST-HD/INFO/locust.main: Shutting down (exit code 0)
+[2024-02-22 13:02:08,221] BEKAB-TEST-HD/INFO/locust.main: Starting web interface at http://localhost:8089 (accepting connections from all network interfaces)
+[2024-02-22 13:02:08,233] BEKAB-TEST-HD/INFO/locust.main: Starting Locust 2.22.0
+[2024-02-22 13:02:45,309] BEKAB-TEST-HD/INFO/locust.main: Shutting down (exit code 0)
+[2024-02-22 13:09:16,876] BEKAB-TEST-HD/INFO/locust.main: Starting web interface at http://localhost:8089 (accepting connections from all network interfaces)
+[2024-02-22 13:09:16,887] BEKAB-TEST-HD/INFO/locust.main: Starting Locust 2.22.0
+[2024-02-22 13:09:22,411] BEKAB-TEST-HD/INFO/locust.main: Shutting down (exit code 0)
