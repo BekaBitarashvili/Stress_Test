@@ -1,5 +1,5 @@
 import unittest
-from front_module import Environment, First, Second, MainClass
+from front.front_module import Environment, First, Second, MainClass
 
 
 class TestFrontModule(unittest.TestCase):
