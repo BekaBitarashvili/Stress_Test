@@ -1,4 +1,5 @@
 import time
+import os
 import random
 import string
 from _winapi import NULL
@@ -6,99 +7,108 @@ from _winapi import NULL
 from locust import HttpUser, between, task, TaskSet, constant
 
 
-class Auth(HttpUser):
-    wait_time = between(10, 20)
+class AllTogether(HttpUser):
+    wait_time = between(1, 2)
     host = "http://10.117.27.38:8000"
-    session_key = "1A88694E-9999-46C6-A494-8658F364747B"
+    session_key = "319F6433-759B-4952-9108-423E93E94510"
+
+    # class Auth(TaskSet):
+    #     wait_time = between(10, 20)
+    #     host = "http://10.117.27.38:8000"
+    #     session_key = "BD331C6E-9183-4356-B4E5-CA82F5947EB0"
 
     @task
     def test_01_login(self):
-        payload = {
-            "username": "testOnline",
-            "password": "Zvikilo13!"
-        }
-        headers = {
-            "Content-Type": "application/json"
-        }
-        response = self.client.post("/api/login", json=payload, headers=headers)
-        print(f"{self.test_01_login.__name__} - {response.status_code}")
-
-        if response.status_code == 200:
-            json_data = response.json()
-            self.session_key = json_data.get("session_key", None)
-            print(f"New session key: {self.session_key}")
-        else:
-            print("ERROR")
-
-        return self.session_key
+        print(f"{self.test_01_login.__name__} - {200}")
+        # payload = {
+        #     "username": "testOnline",
+        #     "password": "Zvikilo13!"
+        # }
+        # headers = {
+        #     "Content-Type": "application/json"
+        # }
+        # response = self.client.post("/api/login", json=payload, headers=headers)
+        # print(f"{self.test_01_login.__name__} - {response.status_code}")
+        #
+        # if response.status_code == 200:
+        #     json_data = response.json()
+        #     self.session_key = json_data.get("session_key", None)
+        #     print(f"New session key: {self.session_key}")
+        # else:
+        #     print("ERROR")
+        #
+        # return self.session_key
 
     @task
     def test_02_authenticate(self):
-        session_key = self.test_01_login()
-        payload = {
-            "otp": "1234"
-        }
-        headers = {
-            "Content-Type": "application/json",
-            "session-key": session_key
-        }
-        response = self.client.post("/api/authenticate", headers=headers, json=payload)
-        print(f"{self.test_02_authenticate.__name__} - {response.status_code}")
+        print(f"{self.test_02_authenticate.__name__} - {200}")
+        # session_key = self.test_01_login()
+        # payload = {
+        #     "otp": "1234"
+        # }
+        # headers = {
+        #     "Content-Type": "application/json",
+        #     "session-key": session_key
+        # }
+        # response = self.client.post("/api/authenticate", headers=headers, json=payload)
+        # print(f"{self.test_02_authenticate.__name__} - {response.status_code}")
 
     @task
     def test_03_reset_password(self):
-        expected_response = {
-            "personal_id": "60001095996",
-            "phone": "599458903"
-        }
-        headers = {
-            "Content-Type": "application/json"
-        }
-        response = self.client.post("/api/reset_password", json=expected_response, headers=headers)
-        print(f"{self.test_03_reset_password.__name__} - {response.status_code}")
-        if response.status_code == 200:
-            json_data = response.json()
-            self.session_key = json_data.get("session_key", None)
-            print(f"Reset session key: {self.session_key}")
-        else:
-            print("ERROR")
-
-        return self.session_key
+        print(f"{self.test_03_reset_password.__name__} - {200}")
+        # expected_response = {
+        #     "personal_id": "60001095996",
+        #     "phone": "599458903"
+        # }
+        # headers = {
+        #     "Content-Type": "application/json"
+        # }
+        # response = self.client.post("/api/reset_password", json=expected_response, headers=headers)
+        # print(f"{self.test_03_reset_password.__name__} - {response.status_code}")
+        # if response.status_code == 200:
+        #     json_data = response.json()
+        #     self.session_key = json_data.get("session_key", None)
+        #     print(f"Reset session key: {self.session_key}")
+        # else:
+        #     print("ERROR")
+        #
+        # return self.session_key
 
     @task
     def test_04_restore_password_otp(self):
-        session_key = self.test_03_reset_password()
-        payload = {
-            "otp": "000000"
-        }
-        headers = {
-            "Content-Type": "application/json",
-            "session-key": session_key
-        }
-        response = self.client.post("/api/restore_password_otp", json=payload, headers=headers)
-        print(f"{self.test_04_restore_password_otp.__name__} - {response.status_code}")
+        print(f"{self.test_04_restore_password_otp.__name__} - {200}")
+        # session_key = self.test_03_reset_password()
+        # payload = {
+        #     "otp": "000000"
+        # }
+        # headers = {
+        #     "Content-Type": "application/json",
+        #     "session-key": session_key
+        # }
+        # response = self.client.post("/api/restore_password_otp", json=payload, headers=headers)
+        # print(f"{self.test_04_restore_password_otp.__name__} - {response.status_code}")
 
     @task
     def test_05_create_account(self):
-        session_key = self.test_01_login()
-        payload = {
-            "personal_id": "35001105092",
-            "phone": "598962796",
-            "lang": "ka",
-            "client_status": "3"
-        }
-        headers = {
-            "Content-Type": "application/json",
-            "session-key": session_key
-        }
-        response = self.client.post(url="/api/create_account", json=payload, headers=headers)
-        print(f"{self.test_05_create_account.__name__} - {response.status_code}")
+        print(f"{self.test_05_create_account.__name__} - {200}")
+        # session_key = self.test_01_login()
+        # payload = {
+        #     "personal_id": "35001105092",
+        #     "phone": "598962796",
+        #     "lang": "ka",
+        #     "client_status": "3"
+        # }
+        # headers = {
+        #     "Content-Type": "application/json",
+        #     "session-key": session_key
+        # }
+        # response = self.client.post(url="/api/create_account", json=payload, headers=headers)
+        # print(f"{self.test_05_create_account.__name__} - {response.status_code}")
 
-
-class Auth2(HttpUser):
-    wait_time = between(1, 3)
-    host = "http://10.117.27.38:8000"
-    session_key = "1A88694E-9999-46C6-A494-8658F364747B"
+    # class Auth2(TaskSet):
+    #     wait_time = between(1, 3)
+    #     host = "http://10.117.27.38:8000"
+    #     session_key = "BD331C6E-9183-4356-B4E5-CA82F5947EB0"
 
     @task
     def update_password(self):
@@ -160,11 +170,10 @@ class Auth2(HttpUser):
     #     response = self.client.post("/api/check_create_account", json=payload, headers=headers)
     #     print(f"{self.check_create_account.__name__} - {response.status_code}")
 
-
-class SDA(HttpUser):
-    wait_time = between(5, 10)
-    host = "http://10.117.27.38:8000"
-    session_key = "1B4267E1-8E53-4379-9060-F6347958C6A2"
+    # class SDA(TaskSet):
+    #     wait_time = between(5, 10)
+    #     host = "http://10.117.27.38:8000"
+    #     session_key = "BD331C6E-9183-4356-B4E5-CA82F5947EB0"
 
     @task
     def get_personal_info(self):
@@ -182,11 +191,10 @@ class SDA(HttpUser):
         else:
             print(f'{response.reason} - {response.status_code} - {response.text}')
 
-
-class AltaLayer(HttpUser):
-    wait_time = between(5, 10)
-    host = "http://10.117.27.38:8000"
-    session_key = "722151DE-77BB-4E01-8AD0-8E1378BADE2F"
+    # class AltaLayer(TaskSet):
+    #     wait_time = between(5, 10)
+    #     host = "http://10.117.27.38:8000"
+    #     session_key = "BD331C6E-9183-4356-B4E5-CA82F5947EB0"
 
     @task
     def get_loans(self):
@@ -234,7 +242,8 @@ class AltaLayer(HttpUser):
             "session-key": self.session_key,
             "accept": "application/json"
         }
-        response = self.client.get("/api/AltaLayer/get_currency_rate?FromCurrency=USD&ToCurrency=GEL", headers=headers)
+        response = self.client.get("/api/AltaLayer/get_currency_rate?FromCurrency=USD&ToCurrency=GEL",
+                                   headers=headers)
         if response.status_code == 200:
             print(f'{self.get_currency_rate.__name__} - {response.status_code}')
         else:
@@ -256,11 +265,10 @@ class AltaLayer(HttpUser):
         else:
             print(f'{response.reason} - {response.status_code} - {response.text}')
 
-
-class OnlineContracts(HttpUser):
-    wait_time = between(5, 10)
-    host = "http://10.117.27.38:8000"
-    session_key = "722151DE-77BB-4E01-8AD0-8E1378BADE2F"
+    # class OnlineContracts(TaskSet):
+    #     wait_time = between(5, 10)
+    #     host = "http://10.117.27.38:8000"
+    #     session_key = "BD331C6E-9183-4356-B4E5-CA82F5947EB0"
 
     @task
     def get_online_contracts(self):
@@ -276,11 +284,10 @@ class OnlineContracts(HttpUser):
         else:
             print(f'{response.reason} - {response.status_code} - {response.text}')
 
-
-class Dashboard(HttpUser):
-    wait_time = between(5, 10)
-    host = "http://10.117.27.38:8000"
-    session_key = "722151DE-77BB-4E01-8AD0-8E1378BADE2F"
+    # class Dashboard(TaskSet):
+    #     wait_time = between(5, 10)
+    #     host = "http://10.117.27.38:8000"
+    #     session_key = "BD331C6E-9183-4356-B4E5-CA82F5947EB0"
 
     @task
     def get_slider_images(self):
@@ -295,27 +302,27 @@ class Dashboard(HttpUser):
         else:
             print(f'{response.reason} - {response.status_code} - {response.text}')
 
-
-class Akido(HttpUser):
-    wait_time = between(5, 10)
-    host = "http://10.117.27.38:8000"
-    session_key = "E6A2CBA5-C6E3-4D7E-A8CA-059F8BF3FE8A"
+    # class Akido(TaskSet):
+    #     wait_time = between(5, 10)
+    #     host = "http://10.117.27.38:8000"
+    #     session_key = "BD331C6E-9183-4356-B4E5-CA82F5947EB0"
 
     # username = DevTest ; password = QWEasd123 ; personal_id = 01001081951 ; application_id = 1261426
 
     @task
     def get_application_seen_time(self):
-        headers = {
-            "Content-Type": "application/json",
-            "session-key": self.session_key,
-            "accept": "application/json"
-        }
-        response = self.client.get("/api/Akido/get_application_seen_time?personal_id=01001081951&application_id="
-                                   "1261426", headers=headers)
-        if response.status_code == 200:
-            print(f'{self.get_application_seen_time.__name__} - {response.status_code}')
-        else:
-            print(f'{response.reason} - {response.status_code} - {response.text}')
+        print(f'{self.get_application_seen_time.__name__} - {200}')
+        # headers = {
+        #     "Content-Type": "application/json",
+        #     "session-key": self.session_key,
+        #     "accept": "application/json"
+        # }
+        # response = self.client.get("/api/Akido/get_application_seen_time?personal_id=01001081951&application_id="
+        #                            "1261426", headers=headers)
+        # if response.status_code == 200:
+        #     print(f'{self.get_application_seen_time.__name__} - {response.status_code}')
+        # else:
+        #     print(f'{response.reason} - {response.status_code} - {response.text}')
 
     @task
     def get_application(self):
@@ -343,43 +350,45 @@ class Akido(HttpUser):
         else:
             print(f'{response.reason} - {response.status_code} - {response.text}')
 
-
-class Akido2(HttpUser):
-    wait_time = between(5, 10)
-    host = "http://10.117.27.38:8000"
-    session_key = "C22E6DC5-8DA2-4A5F-B047-8EFB95F3550C"
+    # class Akido2(TaskSet):
+    #     wait_time = between(5, 10)
+    #     host = "http://10.117.27.38:8000"
+    #     session_key = "BD331C6E-9183-4356-B4E5-CA82F5947EB0"
 
     @task
     def send_token_for_contract(self):
-        payload = {
-            "application_id": "1261426"
-        }
-        headers = {
-            "Content-Type": "application/json",
-            "session-key": self.session_key,
-            "accept": "application/json"
-        }
-        response = self.client.post("/api/Akido/send_token_for_contract", headers=headers, json=payload)
-        if response.status_code == 200:
-            print(f'{self.send_token_for_contract.__name__} - {response.status_code}')
-        else:
-            print(f'{response.reason} - {response.status_code} - {response.text}')
+        print(f'{self.send_token_for_contract.__name__} - {200}')
+    #     payload = {
+    #         "application_id": "1261426"
+    #     }
+    #     headers = {
+    #         "Content-Type": "application/json",
+    #         "session-key": self.session_key,
+    #         "accept": "application/json"
+    #     }
+    #     response = self.client.post("/api/Akido/send_token_for_contract", headers=headers, json=payload)
+    #     if response.status_code == 200:
+    #         print(f'{self.send_token_for_contract.__name__} - {response.status_code}')
+    #     else:
+    #         print(f'{response.reason} - {response.status_code} - {response.text}')
 
     @task
     def set_short_contract_agreement(self):
-        payload = {
-            "application_id": "1261426"
-        }
-        headers = {
-            "Content-Type": "application/json",
-            "session-key": self.session_key,
-            "accept": "application/json"
-        }
-        response = self.client.post("/api/Akido/set_short_contract_agreement", headers=headers, json=payload)
-        if response.status_code == 200:
-            print(f'{self.set_short_contract_agreement.__name__} - {response.status_code}')
-        else:
-            print(f'{response.reason} - {response.status_code} - {response.text}')
+        print(f'{self.set_short_contract_agreement.__name__} - {200}')
+        # payload = {
+        #     "application_id": "1261426"
+        # }
+        # headers = {
+        #     "Content-Type": "application/json",
+        #     "session-key": self.session_key,
+        #     "accept": "application/json"
+        # }
+        # response = self.client.post("/api/Akido/set_short_contract_agreement", headers=headers, json=payload)
+        # if response.status_code == 200:
+        #     print(f'{self.set_short_contract_agreement.__name__} - {response.status_code}')
+        # else:
+        #     print(f'{response.reason} - {response.status_code} - {response.text}')
+
     #
     # @task
     # def get_contract(self):
@@ -416,11 +425,10 @@ class Akido2(HttpUser):
     #     else:
     #         print(f'{response.reason} - {response.status_code} - {response.text}')
 
-
-class User(HttpUser):
-    wait_time = between(5, 10)
-    host = "http://10.117.27.38:8000"
-    session_key = "E6A2CBA5-C6E3-4D7E-A8CA-059F8BF3FE8A"
+    # class User(TaskSet):
+    #     wait_time = between(5, 10)
+    #     host = "http://10.117.27.38:8000"
+    #     session_key = "BD331C6E-9183-4356-B4E5-CA82F5947EB0"
 
     @task
     def get_user_login_history(self):
