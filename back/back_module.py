@@ -10,7 +10,7 @@ from locust import HttpUser, between, task, TaskSet, constant
 class AllTogether(HttpUser):
     wait_time = between(1, 2)
     host = "http://10.117.27.38:8000"
-    session_key = "319F6433-759B-4952-9108-423E93E94510"
+    session_key = "721C56E9-8414-4937-9D97-D07FCEF4130A"
 
     # class Auth(TaskSet):
     #     wait_time = between(10, 20)
@@ -467,3 +467,16 @@ class AllTogether(HttpUser):
             print(f'{self.get_all_list.__name__} - {response.status_code}')
         else:
             print(f'{response.reason} - {response.status_code} - {response.text}')
+
+    @task
+    def get_car_list(self):
+        headers = {
+            "Content-Type": "application/json",
+            "session-key": self.session_key,
+            "accept": "application/json"
+        }
+        response = self.client.get("/api/car/get_list", headers=headers)
+        if response.status_code == 200:
+            print(f'{self.get_car_list.__name__} - {response.status_code}')
+        else:
+            print(f'{response.reason} - {response.status_code} - {response.text} - {self.get_car_list.__name__}')
