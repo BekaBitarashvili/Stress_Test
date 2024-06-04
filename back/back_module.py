@@ -10,7 +10,7 @@ from locust import HttpUser, between, task, TaskSet, constant
 class AllTogether(HttpUser):
     wait_time = between(1, 2)
     host = "http://10.117.27.38:8000"
-    session_key = "DE6828BE-DD51-4643-BD2D-04D3903C4D7A"
+    session_key = "EBC54FBD-D293-4B52-AC4B-766884266A46"
 
     # class Auth(TaskSet):
     #     wait_time = between(10, 20)
@@ -178,8 +178,8 @@ class AllTogether(HttpUser):
     @task
     def get_personal_info(self):
         payload = {
-            "PersonalID": "18001021014",
-            "DocumentNumber": "12IB55555"
+            "PersonalID": "55001028174",
+            "DocumentNumber": "00II00528"
         }
         headers = {
             "Content-Type": "application/json",
