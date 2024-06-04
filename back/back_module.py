@@ -10,7 +10,7 @@ from locust import HttpUser, between, task, TaskSet, constant
 class AllTogether(HttpUser):
     wait_time = between(1, 2)
     host = "http://10.117.27.38:8000"
-    session_key = "721C56E9-8414-4937-9D97-D07FCEF4130A"
+    session_key = "DE6828BE-DD51-4643-BD2D-04D3903C4D7A"
 
     # class Auth(TaskSet):
     #     wait_time = between(10, 20)
@@ -178,8 +178,8 @@ class AllTogether(HttpUser):
     @task
     def get_personal_info(self):
         payload = {
-            "PersonalID": "00000001751",
-            "DocumentNumber": "00II00528"
+            "PersonalID": "18001021014",
+            "DocumentNumber": "12IB55555"
         }
         headers = {
             "Content-Type": "application/json",
@@ -358,6 +358,7 @@ class AllTogether(HttpUser):
     @task
     def send_token_for_contract(self):
         print(f'{self.send_token_for_contract.__name__} - {200}')
+
     #     payload = {
     #         "application_id": "1261426"
     #     }
@@ -480,3 +481,39 @@ class AllTogether(HttpUser):
             print(f'{self.get_car_list.__name__} - {response.status_code}')
         else:
             print(f'{response.reason} - {response.status_code} - {response.text} - {self.get_car_list.__name__}')
+
+    # @task
+    # def upload_photo(self):
+    #     headers = {
+    #         "session-key": self.session_key,
+    #         "accept": "application/json"
+    #     }
+    #     payload = {
+    #         "file": "C:\\Users\\b.bitarashvili\\Desktop\\default.jpg"
+    #     }
+    #     response = self.client.post("/api/upload_photo", headers=headers, json=payload, files=payload)
+    #     if response.status_code == 201:
+    #         print(f'{self.upload_photo.__name__} - {response.status_code}')
+    #     else:
+    #         print(f'{response.reason} - {response.status_code} - {response.text}')
+
+    @task
+    def upload_photo(self):
+        file_path = "C:\\Users\\b.bitarashvili\\Desktop\\default.jpg"
+
+        if not os.path.exists(file_path):
+            print(f'File not found: {file_path}')
+            return
+
+        with open(file_path, 'rb') as file:
+            files = {'image': (os.path.basename(file_path), file, 'image/jpeg')}
+            headers = {
+                "Accept": "application/json",
+                "session-key": self.session_key
+            }
+            response = self.client.post("/api/upload_photo", headers=headers, files=files)
+
+        if response.status_code == 201:
+            print(f'{self.upload_photo.__name__} - {response.status_code}')
+        else:
+            print(f'{response.reason} - {response.status_code} - {response.text}')
