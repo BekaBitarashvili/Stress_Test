@@ -9,8 +9,8 @@ from locust import HttpUser, between, task, TaskSet, constant
 
 class AllTogether(HttpUser):
     wait_time = between(1, 2)
-    host = "http://10.117.27.38:8000"
-    session_key = "EBC54FBD-D293-4B52-AC4B-766884266A46"
+    host = "http://dev.crystalone.ge/ka"
+    session_key = "A51271FA-7F45-49E4-BC67-C178ADB42F63"
 
     # class Auth(TaskSet):
     #     wait_time = between(10, 20)
@@ -134,8 +134,8 @@ class AllTogether(HttpUser):
     def check_customer(self):
         session_key = self.session_key
         payload = {
-            "personal_id": "60001095996",
-            "phone": "599458903"
+            "personal_id": "01001049031",
+            "phone": "579374499"
         }
         headers = {
             "Content-Type": "application/json",
@@ -148,7 +148,7 @@ class AllTogether(HttpUser):
     def check_username(self):
         session_key = self.session_key
         payload = {
-            "username": "AkidoTest"
+            "username": "devtest3"
         }
         headers = {
             "Content-Type": "application/json",
@@ -178,8 +178,8 @@ class AllTogether(HttpUser):
     @task
     def get_personal_info(self):
         payload = {
-            "PersonalID": "55001028174",
-            "DocumentNumber": "00II00528"
+            "PersonalID": "01001049031",
+            "DocumentNumber": "13IN00030"
         }
         headers = {
             "Content-Type": "application/json",
