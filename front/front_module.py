@@ -33,8 +33,8 @@ class First(TaskSet):
 
     def submit_form(self):
         payload = {
-            "username": "devtest3",
-            "password": "QWEasd123!"
+            "username": "P18001021014",
+            "password": "Crystal123!"
         }
         response = self.client.get(url="/", json=payload)
         print(f"{self.submit_form.__name__} - {response.status_code}")
@@ -91,8 +91,8 @@ class First(TaskSet):
     @task
     def registration(self):
         registration_data = {
-            "personal_id": "01001049031",
-            "phone": "579374499"
+            "personal_id": "18001021014",
+            "phone": "577121157"
         }
         response = self.client.get(url="/auth/registration/", json=registration_data)
         print(f"{self.registration.__name__} - {response.status_code}")
@@ -136,8 +136,8 @@ class Second(TaskSet):
 
     def login(self):
         payload = {
-            "username": "devtest3",
-            "password": "QWEasd123"
+            "username": "P18001021014",
+            "password": "Crystal123!"
         }
         response = self.client.post("/login", json=payload)
         if response.status_code == 200:
@@ -221,5 +221,5 @@ class Second(TaskSet):
 class MainClass(HttpUser):
     wait_time = between(1, 3)
     tasks = [First, Second]
-    host = "http://dev.crystalone.ge/ka"
-    session_key = "A51271FA-7F45-49E4-BC67-C178ADB42F63"
+    host = "http://staging.crystalone.ge/ka"
+    session_key = "8992F856-F9A5-4747-B50C-585AD84223B6"
