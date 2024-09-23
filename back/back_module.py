@@ -9,8 +9,8 @@ from locust import HttpUser, between, task, TaskSet, constant
 
 class AllTogether(HttpUser):
     wait_time = between(1, 2)
-    host = "http://staging.crystalone.ge/ka"
-    session_key = "8992F856-F9A5-4747-B50C-585AD84223B6"
+    host = "https://dev.crystalone.ge/ka"
+    session_key = "7D4F172C-752B-44E9-A7CE-BDD8C7DC98D0"
 
     # class Auth(TaskSet):
     #     wait_time = between(10, 20)
@@ -20,24 +20,24 @@ class AllTogether(HttpUser):
     @task
     def test_01_login(self):
         print(f"{self.test_01_login.__name__} - {200}")
-        # payload = {
-        #     "username": "testOnline",
-        #     "password": "Zvikilo13!"
-        # }
-        # headers = {
-        #     "Content-Type": "application/json"
-        # }
-        # response = self.client.post("/api/login", json=payload, headers=headers)
-        # print(f"{self.test_01_login.__name__} - {response.status_code}")
-        #
-        # if response.status_code == 200:
-        #     json_data = response.json()
-        #     self.session_key = json_data.get("session_key", None)
-        #     print(f"New session key: {self.session_key}")
-        # else:
-        #     print("ERROR")
-        #
-        # return self.session_key
+        payload = {
+            "username": "devtest3",
+            "password": "QWEasd123"
+        }
+        headers = {
+            "Content-Type": "application/json"
+        }
+        response = self.client.post("/api/login", json=payload, headers=headers)
+        print(f"{self.test_01_login.__name__} - {response.status_code}")
+
+        if response.status_code == 200:
+            json_data = response.json()
+            self.session_key = json_data.get("session_key", None)
+            print(f"New session key: {self.session_key}")
+        else:
+            print("ERROR")
+
+        return self.session_key
 
     @task
     def test_02_authenticate(self):

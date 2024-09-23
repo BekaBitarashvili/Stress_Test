@@ -136,8 +136,8 @@ class Second(TaskSet):
 
     def login(self):
         payload = {
-            "username": "P18001021014",
-            "password": "Crystal123!"
+            "username": "devtest3",
+            "password": "QWEasd123"
         }
         response = self.client.post("/login", json=payload)
         if response.status_code == 200:
@@ -221,5 +221,5 @@ class Second(TaskSet):
 class MainClass(HttpUser):
     wait_time = between(1, 3)
     tasks = [First, Second]
-    host = "http://staging.crystalone.ge/ka"
-    session_key = "8992F856-F9A5-4747-B50C-585AD84223B6"
+    host = "https://dev.crystalone.ge/ka"
+    session_key = "7D4F172C-752B-44E9-A7CE-BDD8C7DC98D0"
